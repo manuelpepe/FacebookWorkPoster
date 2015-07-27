@@ -5,7 +5,6 @@ import fb
 # You can get a token on https://developers.facebook.com/tools/explorer
 TOKEN = 'YourToken'
 
-
 def read_projects():
     """ Open the project files and return an array with 
     all the projects """
@@ -13,7 +12,7 @@ def read_projects():
     with open('projects.txt', 'r') as f:
         for line in f:
             # If the line is not a comment...
-            if line[0:2] != '//': 
+            if line[0:2] != '//':
                 # ...we get the name.
                 name = line.split(':')[0]
                 if line and name:
@@ -50,15 +49,13 @@ def share_facebook(data):
     facebook = fb.graph.api(TOKEN)
     facebook.publish(cat = 'feed', id = 'me', message = msg)
     facebook = None # Close facebook
-    print('')
     print('\n %' % msg)
     print('     Shared! \n')
 
 def main():
     exit = False
     print("Welcome to Facebook Simple Work Poster")
-    print("")
-    print("Your projects are:")
+    print("\nYour projects are:")
 
     projects = read_projects()
 
