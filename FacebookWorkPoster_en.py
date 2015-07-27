@@ -7,11 +7,14 @@ TOKEN = 'YourToken'
 
 
 def read_projects():
-    """ Open the project files and return all the projects """
+    """ Open the project files and return an array with 
+    all the projects """
     out = []
     with open('projects.txt', 'r') as f:
         for line in f:
-            if line[0:2] != '//':
+            # If the line is not a comment...
+            if line[0:2] != '//': 
+                # ...we get the name.
                 name = line.split(':')[0]
                 if line and name:
                     out.append(name)
@@ -48,9 +51,8 @@ def share_facebook(data):
     facebook.publish(cat = 'feed', id = 'me', message = msg)
     facebook = None # Close facebook
     print('')
-    print(msg)
-    print('     Shared!')
-    print('')
+    print('\n %' % msg)
+    print('     Shared! \n')
 
 def main():
     exit = False
