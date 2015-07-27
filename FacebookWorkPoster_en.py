@@ -2,7 +2,8 @@ import os
 import time
 import fb
 
-TOKEN = 'CAACEdEose0cBAOjdlD7pZBPQg95YglLZAP3jPMu3llhlCfbaTtzDODXERUFigDiZAioh6A57MArnzqDjnIZAVcZBCfqiZB0zlHUyLwBJTtngNAkXUoYRBHWFeyzZBrUh5lETF1RZBzYbFsPoe8Czge7BxcDcZCtAXHfhSgWcj9M3Frw8PERMVdJAWmZAXfXx3dpMja20pOMK3w7gZDZD'
+# You can get a token on https://developers.facebook.com/tools/explorer
+TOKEN = 'YourToken'
 
 
 def read_projects():
