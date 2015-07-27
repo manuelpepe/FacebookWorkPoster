@@ -1,9 +1,9 @@
 // This is a comment
 // A comment takes all the line so you cant write in-line comments
 // You can add new projects in the form of:
-// project_name: hours_worked minutes_worked seconds_worked
+// project_name: hours_worked
 // If you haven't worked in the project yet
-// put zeros so the program doesn't break.
+// put a zero so the program doesn't break.
 //
 // Examples:
 FacebookWorkPoster: 1
