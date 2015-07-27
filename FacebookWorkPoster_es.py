@@ -47,7 +47,7 @@ def save_progress(project_name, time):
 
 def share_facebook(data):
     """ Comparte el post en facebook """
-    msg = 'Estube las ultimas {0} horas trabajando en el proyecto {1}.\n Llevo {2} horas trabajadas en este proyecto.'.format(data['hours'], data['name'], data['total'])
+    msg = 'Estuve las ultimas {0} horas trabajando en el proyecto {1}.\n Llevo {2} horas trabajadas en este proyecto.'.format(data['hours'], data['name'], data['total'])
     facebook = fb.graph.api(TOKEN)
     facebook.publish(cat = 'feed', id = 'me', message = msg)
     facebook = None # Close facebook
