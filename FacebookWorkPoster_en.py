@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import time
 import fb
@@ -6,35 +7,28 @@ import fb
 TOKEN = 'YourToken'
 
 def read_projects():
-    """ Open the project files and return an array with 
+    """ Open the project files and return an list with 
     all the projects """
-    out = []
+    blacklist = ['//', ':']
     with open('projects.txt', 'r') as f:
-        for line in f:
-            # If the line is not a comment...
-            if line[0:2] != '//':
-                # ...we get the name.
-                name = line.split(':')[0]
-                if line and name:
-                    out.append(name)
-    return out
+        return [line.split(':')[0] for line in f if not line.startswith(blacklist) and line != '']
 
 def print_projects(projects):
-    """ Print all the elements in the projects array """
-    print ""
-    for n in range(len(projects)):
-        print("{0} - {1}".format(n, projects[n]))
-    print ""
+    """ Print all the elements in the projects list """
+    print()
+    for index, project in enumerate(projects):
+        print("{0} - {1}".format(n, project))
+    print()
 
 def save_progress(project_name, time):
     """ Adds the time the user have worked on the project
     and returns the values needed for sharing with facebook """
+    blacklist = ['//', ':']
     with open('projects.txt', 'r+') as f:
-        content = f.read()
-        content = content.split('\n')
-        for i in range(len(content)):
-            if project_name in content[i]:
-                total_hours = int(content[i].split(':')[1].strip(' ')) + int(time)
+        content = f.readlines()
+        for index, line in enumerate(content):
+            if not line.startswith(blacklist) and project_name in content:
+                total_hours = int(content[i].split(':')[1].strip(' ')) + time
                 content[i] = "{0}: {1}".format(project_name, total_hours)
                 line = i
         f.seek(0)
@@ -48,7 +42,6 @@ def share_facebook(data):
     msg = 'I\'ve been working in the {1} project for the last {0} hours.\n I worked {2} hours in this project!'.format(data['hours'], data['name'], data['total'])
     facebook = fb.graph.api(TOKEN)
     facebook.publish(cat = 'feed', id = 'me', message = msg)
-    facebook = None # Close facebook
     print('\n %' % msg)
     print('     Shared! \n')
 
@@ -72,8 +65,9 @@ def main():
                 input = raw_input('When you want to stop just write stop (don\'t worry, i won\'t count that time): ').strip().lower()
                 if input == 'stop':
                     exit = True
-                    elapsed_hours = int(time.strftime('%H', time.gmtime(time.time() - start_time)))
-                    elapsed_minutes = int(time.strftime('%M', time.gmtime(time.time() - start_time)))
+                    elapsed = time.gmtime(time.time() - start_time)
+                    elapsed_hours = elapsed.tm_hour
+                    elapsed_minutes = elapsed.tm_min
                     if elapsed_minutes >= 30:
                         elapsed_hours += 1
                     print("You have been working in this project {0} hours.".format(elapsed_hours))
@@ -93,10 +87,7 @@ def main():
                 else:
                     exit = False
         input = raw_input('Do you want to select another project? (Y/n): ').strip().lower()
-        if input == 'n' or input == 'no':
-            exit = True
-        else:
-            exit = False
+        exit = (input == 'n' or input == 'no')
     print("Have a good day!")
 
 if __name__ == '__main__':
