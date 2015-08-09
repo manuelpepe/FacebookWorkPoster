@@ -6,19 +6,22 @@ import fb
 # Podes conseguir un token en https://developers.facebook.com/tools/explorer
 TOKEN = 'TuToken'
 
+def is_valid_line(line):
+    if not line.startswith('//') and not line.startswith(':'):
+        return True
+    return False
 
 def read_projects():
     """ Abre el archivo projects.txt y devuelve un lista
     con todos los proyectos. """
-    blacklist = ['//', ':']
     with open('projects.txt', 'r') as f:
-        return [line.split(':')[0] for line in f if not line.startswith(blacklist) and line != '']
+        return [line.split(':')[0] for line in f if is_valid_line(line) and line != '']
 
 def print_projects(projects):
     """ Imprime todos los elementos en el lista de proyectos """
     print()
     for index, project in enumerate(projects):
-        print("{0} - {1}".format(n, project))
+        print("{0} - {1}".format(index, project))
     print()
 
 def save_progress(project_name, time):
@@ -56,16 +59,16 @@ def main():
 
     while not exit:
         print_projects(projects)
-        project_selection = raw_input('En que proyecto vas a trabajar? (numero): ')
+        project_selection = input('En que proyecto vas a trabajar? (numero): ')
         project_name = projects[int(project_selection)]
 
-        input = raw_input('Queres trabajar en "{0}" ? (Y/n): '.format(project_name)).strip().lower()
-        if input == 'y' or input == 'yes':
+        user_input = input('Queres trabajar en "{0}" ? (Y/n): '.format(project_name)).strip().lower()
+        if user_input == 'y' or user_input == 'yes':
             print("El contador acaba de empezar. A trabajar!")
             start_time = time.time()
             while not exit:
-                input = raw_input('Cuando quieras parar escribí "stop" (no te preocupes, no voy a contar ese tiempo): ').strip().lower()
-                if input == 'stop':
+                user_input = input('Cuando quieras parar escribí "stop" (no te preocupes, no voy a contar ese tiempo): ').strip().lower()
+                if user_input == 'stop':
                     exit = True
                     elapsed = time.gmtime(time.time() - start_time)
                     elapsed_hours = elapsed.tm_hour
@@ -73,23 +76,23 @@ def main():
                     if elapsed_minutes >= 30:
                         elapsed_hours += 1
                     print("Estubiste {0} horas trabajando en este proyecto.".format(elapsed_hours))
-                    input = raw_input('Queres salvar tu progreso? (Y/n): ').strip().lower()
-                    if input == 'y' or input == 'yes':
+                    user_input = input('Queres salvar tu progreso? (Y/n): ').strip().lower()
+                    if user_input == 'y' or user_input == 'yes':
                         facebook_data = save_progress(project_name, elapsed_hours)
-                        input = raw_input('Queres compartir tu progreso en Facebook? (Y/n): ').strip().lower()
-                        if input == 'y' or input == 'yes':
+                        user_input = input('Queres compartir tu progreso en Facebook? (Y/n): ').strip().lower()
+                        if user_input == 'y' or user_input == 'yes':
                             facebook_data['hours'] = elapsed_hours
                             share_facebook(facebook_data)
                             exit = True
-                    elif input == 'n' or input == 'no':
+                    elif user_input == 'n' or user_input == 'no':
                         print('Ok!')
                         exit = True
                     else:
                         print('Comando invalido.')
                 else:
                     exit = False
-        input = raw_input('Queres trabajar en otro proyecto? (Y/n): ').strip().lower()
-        exit = (input == 'n' or input == 'no')
+        user_input = input('Queres trabajar en otro proyecto? (Y/n): ').strip().lower()
+        exit = (user_input == 'n' or user_input == 'no')
     print("Nos vemos!")
 
 if __name__ == '__main__':
