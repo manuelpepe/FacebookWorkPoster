@@ -12,7 +12,7 @@ https://www.reddit.com/r/learnprogramming/comments/3espyu
 
 ### Español:
 Esta aplicación sirve para administrar el tiempo que vas trabajando en tus proyectos.
-Tambien te deja compartir en facebook datos como cuando tiempo estubiste trabajando esta secion,
+También te deja compartir en facebook datos como cuando tiempo estuviste trabajando esta sesion,
 cuando tiempo en total trabajaste en el proyecto y, por supuesto, el nombre del proyecto.
 
 Para que la aplicación funcione necesitas un Token de acceso de Facebook, podes conseguirlo acá:
